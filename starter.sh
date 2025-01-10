@@ -4,7 +4,7 @@
 # Move you fio job file to job_files before running the script.
 # Add nodepool, hostnetwork config,client protocol ,bucket name in pod-manifests/pod.yaml.Alternatively, move your pod.yaml to pod-manifests/
 # and pass it as an argument to this script.
-# Run the script with bash starter.sh <cluster_name> <location> <project> <pod.yaml> <fio_job_file.fio> <fio_result_file>
+# Run the script with bash starter.sh <cluster_name> <location> <project> <pod.yaml> <fio_job_file.fio> <fio_result_file.json>
 
 cluster_name=$1
 location=$2
@@ -13,6 +13,13 @@ podyaml=$4
 fio_job_file=$5
 fio_result_file=$6 # Make sure to name this in format hostnetwork_<enabled/disabled>_bootdisksize_<val>_clientprotocol_<grpc/http>.json for identifying test runs.
 
+echo "Run parameters : \
+      cluster: ${cluster_name} \
+      location: ${location} \
+      project: ${project}\
+      pod: ${podyaml}\
+      job file: ${fio_job_file}\
+      results file: ${fio_result_file}"
 
 gcloud container clusters get-credentials $cluster_name \
     --location=$location \
