@@ -17,7 +17,7 @@ filename_format=$jobname.$jobnum.$filenum
 
 [filesize128K_blocksize128K]
 stonewall
-directory=/data/128kb
+directory=${MOUNT_POINT}/128kb
 numjobs=128 
 bs=128K
 filesize=128K
