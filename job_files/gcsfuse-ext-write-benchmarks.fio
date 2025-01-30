@@ -27,30 +27,34 @@ filesize=1G
 [256kb_filesize_16K_blocksize]
 stonewall
 # Change the test directory (1mb) for different experiments. The directory must exist within the mounted directory.
-directory=${MOUNT_POINT}/1gb
+directory=${MOUNT_POINT}/256kb
 numjobs=112
+nrfiles=30
 bs=16K
 filesize=256K
 
 [1mb_filesize_1m_blocksize]
 stonewall
 # Change the test directory (1mb) for different experiments. The directory must exist within the mounted directory.
-directory=${MOUNT_POINT}/1gb
+directory=${MOUNT_POINT}/1mb
 numjobs=112
+nrfiles=30
 filesize=1M
 
 [50mb_filesize_1m_blocksize]
 stonewall
 # Change the test directory (1mb) for different experiments. The directory must exist within the mounted directory.
-directory=${MOUNT_POINT}/1gb
+directory=${MOUNT_POINT}/50mb
 numjobs=112
+nrfiles=20
 filesize=50M
 
 [100mb_filesize_1m_blocksize]
 stonewall
 # Change the test directory (1mb) for different experiments. The directory must exist within the mounted directory.
-directory=${MOUNT_POINT}/1gb
+directory=${MOUNT_POINT}/100mb
 numjobs=112
+nrfiles=10
 filesize=100M
 
 [1gb_filesize_1m_blocksize]
@@ -58,4 +62,5 @@ stonewall
 # Change the test directory (1mb) for different experiments. The directory must exist within the mounted directory.
 directory=${MOUNT_POINT}/1gb
 numjobs=112
+nrfiles=2
 filesize=1G
