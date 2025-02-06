@@ -1,0 +1,1 @@
+BLOCK_SIZE=1M FILE_SIZE=1G MODE=read NUMJOBS=48 fio read.fio
