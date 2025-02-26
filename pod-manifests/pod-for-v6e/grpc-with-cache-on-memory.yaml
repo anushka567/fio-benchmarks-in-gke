@@ -11,7 +11,7 @@ spec:
     cloud.google.com/gke-tpu-topology: 2x2
     cloud.google.com/gke-tpu-accelerator: tpu-v6e-slice
     cloud.google.com/gke-nodepool: tpu-node-pool-2tb-boot-disk
-  hostNetwork: false
+  hostNetwork: true
   containers:
   - image: ubuntu:22.04
     name: ubuntu
@@ -28,12 +28,26 @@ spec:
     volumeMounts:
     - name: data-vol
       mountPath: /data
+    - name: dshm
+      mountPath: /shm
   volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+  - name: gke-gcsfuse-cache
+    emptyDir:
+      medium: Memory
   - name: data-vol
     csi:
       driver: gcsfuse.csi.storage.gke.io
       volumeAttributes:
-        bucketName: anushkadhn-us-central2-b-hns-bkt
-        fileCacheCapacity: "0"
-        mountOptions: "implicit-dirs,file-cache:max-size-mb:0,gcs-connection:client-protocol:http1"
+        bucketName: anushkadhn-llama2
+        metadataCacheTTLSeconds: "-1"
+        metadataTypeCacheCapacity: "-1"
+        metadataStatCacheCapacity: "-1"
+        fileCacheCapacity: "-1"
+        fileCacheForRangeRead: "true"
+        gcsfuseLoggingSeverity: "info"
         disableMetrics: "true"
+        mountOptions: "implicit-dirs,gcs-connection:client-protocol:grpc,file-cache:enable-parallel-downloads:true"
+

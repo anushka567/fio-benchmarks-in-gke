@@ -8,7 +8,7 @@ metadata:
 spec:
   activeDeadlineSeconds: 50000
   nodeSelector:
-    cloud.google.com/gke-nodepool: anushkadhn-node-pool-c4-92
+    cloud.google.com/gke-nodepool: n2-96-node-pool
   hostNetwork: true
   containers:
   - image: ubuntu:22.04
@@ -26,12 +26,26 @@ spec:
     volumeMounts:
     - name: data-vol
       mountPath: /data
+    - name: dshm
+      mountPath: /shm
   volumes:
+  - name: dshm
+    emptyDir:
+      medium: Memory
+  - name: gke-gcsfuse-cache
+    emptyDir:
+      medium: Memory
   - name: data-vol
     csi:
       driver: gcsfuse.csi.storage.gke.io
       volumeAttributes:
-        bucketName: anushkadhn-us-east5b-bkt
-        fileCacheCapacity: "0"
-        mountOptions: "implicit-dirs,file-cache:max-size-mb:0,gcs-connection:client-protocol:grpc"
+        bucketName: anushkadhn-llama2
+        metadataCacheTTLSeconds: "-1"
+        metadataTypeCacheCapacity: "-1"
+        metadataStatCacheCapacity: "-1"
+        fileCacheCapacity: "-1"
+        fileCacheForRangeRead: "true"
+        gcsfuseLoggingSeverity: "info"
         disableMetrics: "true"
+        mountOptions: "implicit-dirs,gcs-connection:client-protocol:http1,file-cache:enable-parallel-downloads:true"
+
